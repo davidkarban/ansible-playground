@@ -1,0 +1,37 @@
+#- copy:
+#    src: "RPM-GPG-KEY-ZABBIX-B5333005"
+#    dest: /root/
+#
+#- copy:
+#    src: "zabbix-release-latest-7.2.el{{ ansible_distribution_major_version}}.noarch.rpm"
+#    dest: /root/
+#
+#- name: Import a key from a file
+#  ansible.builtin.rpm_key:
+#    state: present
+#    key: /root/RPM-GPG-KEY-ZABBIX-B5333005
+#
+#- name: Install zabbix repo rpm from a local file
+#  ansible.builtin.dnf:
+#    name: "/root/zabbix-release-latest-7.2.el{{ ansible_distribution_major_version}}.noarch.rpm"
+#    state: present
+#
+- name: Install zabbix-agent
+  ansible.builtin.package:
+    name: "zabbix-agent"
+    state: present
+
+- name: Configure zabbix agent
+  ansible.builtin.template:
+    src: zabbix_agentd.conf.j2
+    dest: /etc/zabbix_agentd.conf
+    owner: root
+    mode: "0644"
+  # Kdyz task je "Changed" pak pust z handlers restart
+  notify: Restart zabbix agent
+
+- name: Zajistit aby zabbix-agent nabehl
+  ansible.builtin.service:
+    name: zabbix-agent
+    state: started
+    enabled: true

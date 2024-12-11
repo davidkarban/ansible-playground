@@ -1,0 +1,3 @@
+- name: davidkarban.openssh
+  src: https://github.com/davidkarban/ansible-openssh.git
+
