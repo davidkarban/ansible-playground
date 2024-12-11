@@ -1,2 +1,3 @@
 zabbix_servers:
   - "only.one"
+  - "exceptional"

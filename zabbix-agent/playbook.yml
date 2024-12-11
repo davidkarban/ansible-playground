@@ -35,5 +35,11 @@
         dest: /etc/zabbix_agentd.conf
         owner: root
         mode: "0644"
+      # Kdyz task je "Changed" pak pust z handlers restart
       notify: Restart zabbix agent
 
+    - name: Zajistit aby zabbix-agent nabehl
+      ansible.builtin.service:
+        name: zabbix-agent
+        state: started
+        enabled: true
