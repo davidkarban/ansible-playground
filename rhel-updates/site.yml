@@ -1,0 +1,19 @@
+- hosts: all
+  become: true
+  serial: 1
+  tasks:
+    - name: Update all packages
+      dnf:
+       # best: true/false
+        name: "*"
+        exclude: "{{ rhel_updates_excludes | default(omit) }}"
+        state: latest
+        update_cache: true
+      register: result
+
+    - name: Reboot
+      ansible.builtin.reboot:
+        msg: "Automatic reboot after updates."
+
+    - debug:
+        msg: "Updated packages: {{ result }}"
