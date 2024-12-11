@@ -14,7 +14,13 @@
         state: present
         key: /root/RPM-GPG-KEY-ZABBIX-B5333005
 
-    - name: Install zabbix rpm from a local file
+    - name: Install zabbix repo rpm from a local file
       ansible.builtin.dnf:
         name: "/root/zabbix-release-latest-7.2.el{{ ansible_distribution_major_version}}.noarch.rpm"
         state: present
+
+    - name: Install zabbix-agent
+      ansible.builtin.package:
+        name: "zabbix-agent"
+        state: present
+
