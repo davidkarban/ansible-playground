@@ -24,3 +24,10 @@
         name: "zabbix-agent"
         state: present
 
+    - name: Configure zabbix agent
+      ansible.builtin.template:
+        src: zabbix_agentd.conf
+        dest: /etc/zabbix_agentd.conf
+        owner: root
+        mode: "0644"
+
