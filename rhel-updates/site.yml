@@ -1,6 +1,15 @@
 - hosts: all
   become: true
-  serial: 1
+  # Velikost davky, pocet serveru co pobezi paralelne najednou
+  serial:
+    - 1
+    - 5
+    - 10
+  # Kolik procent max muze padnout, aby se jeste pokracovalo.
+  max_fail_percentage: 20%
+  vars:
+    rhel_updates_excludes:
+      - "xfsprogs"
   tasks:
     - name: Update all packages
       dnf:
@@ -16,4 +25,9 @@
         msg: "Automatic reboot after updates."
 
     - debug:
-        msg: "Updated packages: {{ result }}"
+        var: result.results
+      when: result.changed
+
+    - debug:
+        msg: "No packages were updated."
+      when: not result.changed|default(false)
