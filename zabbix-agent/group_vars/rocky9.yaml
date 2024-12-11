@@ -1,0 +1,5 @@
+
+zabbix_servers: 
+  - "rocky9_monitoring_server"
+  - "server2"
+
