@@ -1,0 +1,20 @@
+- hosts: all
+  become: true
+  tasks:
+    - copy:
+        src: "RPM-GPG-KEY-ZABBIX-B5333005"
+        dest: /root/
+
+    - copy:
+        src: "zabbix-release-latest-7.2.el{{ ansible_distribution_major_version}}.noarch.rpm"
+        dest: /root/
+
+    - name: Import a key from a file
+      ansible.builtin.rpm_key:
+        state: present
+        key: /root/RPM-GPG-KEY-ZABBIX-B5333005
+
+    - name: Install zabbix rpm from a local file
+      ansible.builtin.dnf:
+        name: "/root/zabbix-release-latest-7.2.el{{ ansible_distribution_major_version}}.noarch.rpm"
+        state: present

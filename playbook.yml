@@ -1,0 +1,55 @@
+# Spustime pomoci
+# ansible-playbook -i hosts playbook.yml
+# Definice nad cim ma playbook bezet
+- hosts: all:!freebsd:!ansible_machine
+  remote_user: root
+  gather_facts: false
+  tasks:
+    - name: Zajisti, ze mame python
+      raw: dnf install python3 -y
+      when:
+        - inventory_hostname != "serverc"
+        - inventory_hostname != "serverd"
+      register: result
+      changed_when: "'Nothing to do.' not in result.stdout"
+
+    - name: Zajisti, ze mame python
+      raw: dnf install python39 -y
+      when:
+        - inventory_hostname == "serverc"
+        - inventory_hostname != "serverd"
+      register: result
+      changed_when: "'Nothing to do.' not in result.stdout"
+
+    - name: Zajisti, ze mame python
+      raw: apt install python3 -y
+      when:
+        - inventory_hostname == "serverd"
+      register: result
+      changed_when: "'is already the' not in result.stdout"
+
+    - name: Vytvorime usera student
+      user:
+        name: "student"
+        state: present
+        groups: "wheel"
+
+    # Dodadni authorized key
+    - name: Nahrajeme ssh klice
+      authorized_key:
+        user: student
+        state: present
+        key: "{{ lookup('file', '/home/student/.ssh/id_ed25519.pub') }}"
+      tags:
+        - "auth"
+        - "always"
+
+
+- hosts: all
+  tasks:
+    # Prvni task, modul ping
+    - name: Pingneme je!
+      ping:
+
+    - ping:
+      name: Pingneme je!
