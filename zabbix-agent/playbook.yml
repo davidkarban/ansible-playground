@@ -1,5 +1,10 @@
 - hosts: all
   become: true
+  handlers:
+    - name: Restart zabbix agent
+      service:
+        name: zabbix-agent
+        state: restarted
   tasks:
     - copy:
         src: "RPM-GPG-KEY-ZABBIX-B5333005"
@@ -30,4 +35,5 @@
         dest: /etc/zabbix_agentd.conf
         owner: root
         mode: "0644"
+      notify: Restart zabbix agent
 
