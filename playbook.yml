@@ -37,12 +37,19 @@
     # Dodadni authorized key
     - name: Nahrajeme ssh klice
       authorized_key:
-        user: student
+        # item je promenna vytvorena loop-em
+        # poprve to bude student
+        # podruhe root
+        user: "{{ item }}"
         state: present
         key: "{{ lookup('file', '/home/student/.ssh/id_ed25519.pub') }}"
       tags:
         - "auth"
         - "always"
+      # Klice dostanou oba tito uzivatele loop -> for cyklus
+      loop:
+        - "student"
+        - "root"
 
 
 - hosts: all
