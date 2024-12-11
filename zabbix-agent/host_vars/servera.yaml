@@ -1,0 +1,2 @@
+zabbix_servers:
+  - "only.one"
