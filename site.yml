@@ -1,5 +1,11 @@
 - hosts: rocky9
   become: true
   roles:
-    - davidkarban.openssh
+    - role: davidkarban.openssh
+      tags:
+        - "ssh"
+    - role: geerlingguy.postgresql
+      tags:
+        - "postgre"
+
 #    - postgresql
