@@ -2,3 +2,9 @@
   src: https://github.com/davidkarban/ansible-openssh.git
 
 - name: geerlingguy.postgresql
+
+- name: robertdebock.tomcat
+#- name: robertdebock.service
+
+- name: crazikpl.awx_deploy
+- name: geerlingguy.docker
