@@ -1,0 +1,27 @@
+- hosts: all
+  tasks:
+  - shell: "/bin/false"
+    args:
+      creates: /etc/passwd
+    register: trpaslicek
+    failed_when: "trpaslicek.rc == 0"
+    changed_when: "trpaslicek.rc == 2"
+    ignore_errors: true
+
+  - debug:
+      var: trpaslicek
+
+  - shell: "dnf install mariadb-server -y"
+    become: true
+    args:
+      creates: /var/lib/mysql
+
+  - copy:
+      dest: /home/student/script.sh
+      mode: "0755"
+      content: >
+        #!/bin/bash
+
+        uptime
+
+  - script: /home/student/script.sh
