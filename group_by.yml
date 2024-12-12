@@ -1,0 +1,15 @@
+# Ukazka vytvoreni skupin dle promennych
+- hosts: all
+  tasks:
+    - debug:
+        var: groups
+      # Spusti task jen jednou na jednom ze serveru
+      run_once: true
+
+    - name: Create groups based on the machine architecture
+      ansible.builtin.group_by:
+        key: "{{ansible_distribution}}-{{ansible_distribution_major_version}}"
+
+    - debug:
+        var: groups
+      run_once: true
