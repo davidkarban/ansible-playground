@@ -1,0 +1,103 @@
+# must-have
+awx:
+  admin_user: 'admin'
+  admin_mail: 'david+awx@davidkarban.cz'
+  admin_pwd: 'admin'
+
+  nginx:  # configure the webserver settings => see: https://github.com/ansibleguy/infra_nginx
+    domain: 'localhost'
+    aliases: ['other.guy.net']
+    ip: '10.192.0.69'
+ 
+    ssl:
+      mode: 'ca'
+      cert:
+        cn: 'Ansible AWX'
+        country: 'AT'
+        org: 'AnsibleGuy'
+        email: 'awx@template.ansibleguy.net'
+  
+  # good to have
+  backup_path: '/var/backups/awx'
+  backup_timer: 'Mon *-*-* 00:00:00'
+  # for date-time format see:
+  #   https://wiki.archlinux.org/title/Systemd/Timers
+  #   https://silentlad.com/systemd-timers-oncalendar-(cron)-format-explained
+  
+  # not necessary => only set if you need them especially
+  settings:
+    pg_username: 'awxpg'
+    pg_password: !vault ...
+    broadcast_websocket_secret: !vault ...
+    secret_key: !vault ...
+
+nginx:
+  config:
+    client_max_body_size: '500m'
+    ssl_session_timeout: '15m'
+  
+  sites:
+    some_proxy:
+      mode: 'proxy'
+      domain: 'some.guy.net'
+      aliases:
+        - 'service.guy.net'
+      plain_only: true
+
+      port_ssl: 8443
+      port_plain: 8080
+      proxy:  # default proxy-target is localhost
+        port: 50000  # target port
+        
+        cache:  # upstream content-caching
+          enable: true
+
+      ssl:
+        mode: 'existing'  # pre-existing certificates to be copied to the target server
+
+      security:
+        # very basic filtering of bad bots based on user-agent matching
+        block_script_bots: true
+        block_bad_crawler_bots: true
+
+    guys_statics:
+      mode: 'server'
+      domain: 'static.guy.net'
+      serve:
+        path: '/var/www/static'
+
+      plain_only: true
+#      ssl:
+#        mode: 'snakeoil'
+      
+#      config:  # add settings as key-value pairs
+#        LimitRequestFields: 10
+#      config_additions:  # add a list of custom lines of config
+#        - 'location = /favicon.ico {alias /var/not_www/site_guys_statics/favicon.ico;}'
+#
+#    git_stuff:
+#      mode: 'redirect'
+#      redirect:
+#        target: 'https://github.com/ansibleguy'
+#
+#      ssl:
+#        mode: 'letsencrypt'
+#      letsencrypt:
+#        email: 'nginx@template.ansibleguy.net'
+#
+#      security:
+#        restrict_methods: false
+#
+#    fileshare:
+#      mode: 'server'
+#      domain: 'files.guy.net'
+#      serve:
+#        path: '/var/www/files'
+#
+#      basic_auth:
+#        enable: true
+#        provider: 'file'
+#        file:
+#          users:
+#            some_user: 'some_password'
+#

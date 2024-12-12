@@ -1,0 +1,4 @@
+# Connect to qemu
+plugin: community.libvirt.libvirt
+uri: 'lxc:///'
+

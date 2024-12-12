@@ -8,3 +8,6 @@
 
 - name: crazikpl.awx_deploy
 - name: geerlingguy.docker
+- name: ansibleguy.sw_awx
+- name: ansibleguy.infra_docker_minimal
+- name: ansibleguy.infra_nginx

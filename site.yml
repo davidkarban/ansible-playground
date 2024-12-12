@@ -15,8 +15,9 @@
   tasks:
     - fail:
 
-- hosts: ansible_machine
+- hosts: serverd
   become: true
   roles:
-    - geerlingguy.docker
-    - role: crazikpl.awx_deploy
+    - role: ansibleguy.infra_nginx
+    - role: ansibleguy.infra_docker_minimal
+    - role: ansibleguy.sw_awx
