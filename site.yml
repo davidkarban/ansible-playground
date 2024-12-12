@@ -7,9 +7,9 @@
 #    - role: geerlingguy.postgresql
 #      tags:
 #        - "postgre"
-#    - role: robertdebock.bootstrap
-#    - role: robertdebock.core_dependencies
-#    - role: robertdebock.java
+    - role: robertdebock.bootstrap
+    - role: robertdebock.core_dependencies
+    - role: robertdebock.java
     - role: robertdebock.tomcat
 
 - hosts: ansible_machine

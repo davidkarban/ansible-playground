@@ -1,0 +1,16 @@
+1. Upravte sudo tak, aby nechtelo heslo.
+* Pouzijte template module anebo lineinfile, ale vzdy pouzijte i parametr validate , aby byla jistota funkcniho suda.
+* sudo ma smysl nastavit v playbook.yml tam, kde se nastavuji authorized_keys.
+
+
+2. Najdete na galaxy.ansible.com roli pro tomcat a nainstalujte jej na servera a serverb.
+* Nasel jsem na ansible galaxy roli, ktera byla dost stahovana a zaroven relativne nedavno aktualizovana
+* Dodana do requirements, stahnuta, spustena - fail
+* Hlasila chybejici service roli, dodana, spusteno, fail.
+* Sel jsem na zdroj role na github, nasel jem tam requirments.yml. Pusteno ansible-galaxy install -r /home/student/.ansible/roles/robertdebock.tomcat/requirements.yml
+* Po nainstalovani zavislosti spusten ansible-playbook.
+
+---
+
+Pro info:
+ * na serveru serverb je stale k updatu xfsprogs, tzn, nastaveni exclude u dnf modulu dela presne to co jsme chteli.
