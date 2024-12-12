@@ -1,4 +1,5 @@
 - hosts: rocky9
+  strategy: debug
   become: true
   roles:
 #    - role: davidkarban.openssh
@@ -11,6 +12,8 @@
     - role: robertdebock.core_dependencies
     - role: robertdebock.java
     - role: robertdebock.tomcat
+  tasks:
+    - fail:
 
 - hosts: ansible_machine
   become: true

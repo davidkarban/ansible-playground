@@ -4,11 +4,14 @@
 
 
 2. Najdete na galaxy.ansible.com roli pro tomcat a nainstalujte jej na servera a serverb.
-* Nasel jsem na ansible galaxy roli, ktera byla dost stahovana a zaroven relativne nedavno aktualizovana
+* Nasel jsem na ansible galaxy roli, ktera byla dost stahovana a zaroven relativne nedavno aktualizovana.
 * Dodana do requirements, stahnuta, spustena - fail
 * Hlasila chybejici service roli, dodana, spusteno, fail.
 * Sel jsem na zdroj role na github, nasel jem tam requirments.yml. Pusteno ansible-galaxy install -r /home/student/.ansible/roles/robertdebock.tomcat/requirements.yml
-* Po nainstalovani zavislosti spusten ansible-playbook.
+* Po nainstalovani zavislosti spusten ansible-playbook. Fail.
+* Role dodany do site.yml pred tomcatem.
+* Opet spusten ansible-playbook.
+
 
 ---
 
